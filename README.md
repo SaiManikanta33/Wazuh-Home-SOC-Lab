@@ -65,7 +65,7 @@ Wazuh Server                   Wazuh Agent
 ### 1. Wazuh Security Overview Dashboard
 
 The dashboard provides an overview of the security events and alerts available in the lab.
-
+![alt text](Screenshots/01-wazuh-security-overview.png)
 
 ### 2. Authentication Analytics
 
