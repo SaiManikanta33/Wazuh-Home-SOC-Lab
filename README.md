@@ -65,37 +65,38 @@ Wazuh Server                   Wazuh Agent
 ### 1. Wazuh Security Overview Dashboard
 
 The dashboard provides an overview of the security events and alerts available in the lab.
+
 ![alt text](Screenshots/01-wazuh-security-overview.png)
 
 ### 2. Authentication Analytics
 
 Authentication-related events from the monitored endpoint can be explored to understand login activity.
 
-![Agent Authentication Analytics](screenshots/02-agent-authentication-analytics.png)
+![alt text](Screenshots/06-Authenticatio-Analytics.png)
 
 ### 3. Agent Events and Rule Filtering
 
 Filtering events by rule ID helps narrow down the investigation to relevant authentication detections.
 
-![Wazuh Agent Events Rule Filter](screenshots/03-agent-events-rule-filter.png)
+![alt text](Screenshots/02-agent-events-rule-filter.png.png)
 
 ### 4. Expanded Event Details
 
 Inspecting an individual event provides additional information for understanding why an alert was generated.
 
-![Wazuh Expanded Event Details](screenshots/04-expanded-event-details.png)
+Wazuh-Home-SOC-Lab/Screenshots/03-expanded-event-details.png.png
 
 ### 5. Controlled Failed-Login Test
 
 A controlled authentication test was performed on the Kali Linux endpoint using the test account `soc_test_user`. An intentionally incorrect password was entered to generate a failed authentication event.
 
-![Kali Linux Failed Login Test](screenshots/05-kali-failed-login-test.png)
+Wazuh-Home-SOC-Lab/Screenshots/04-kali-failed-login-test.png.png
 
 ### 6. Failed-Login Alert Investigation
 
 The corresponding Wazuh alert was investigated to verify that the authentication event was detected by the monitoring system.
 
-![Wazuh Failed Login Alert](screenshots/06-kali-lab-failed-login-alert.png)
+Wazuh-Home-SOC-Lab/Screenshots/05-kali-lab-failed-login-alert.png.png
 
 ## Detection Results
 
@@ -152,4 +153,5 @@ This project is intended for educational purposes and authorized lab testing onl
 
 ## Author
 
+Sai Manikanta
 Cybersecurity student focused on SOC operations, Blue Team security, SIEM monitoring, threat detection, and incident investigation.
