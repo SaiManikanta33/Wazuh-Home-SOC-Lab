@@ -1,94 +1,155 @@
 # Wazuh-Home-SOC-Lab
-# Wazuh Home SOC Lab
 
-A hands-on cybersecurity project to learn Security Information and Event Management (SIEM), endpoint log monitoring, authentication-event detection, and security alert investigation using Wazuh.
+
+A hands-on Security Operations Center (SOC) lab built using **Wazuh SIEM**, Docker Compose, Ubuntu, and Kali Linux. This project demonstrates endpoint monitoring, Linux authentication-event detection, alert investigation, and basic threat hunting in a controlled virtual environment.
 
 ## Project Overview
 
-This project demonstrates a basic Home Security Operations Center (SOC) environment using Wazuh deployed with Docker Compose on Ubuntu. A Kali Linux endpoint sends system events to the Wazuh manager, where security rules analyze the events and generate alerts.
+The goal of this project is to build a beginner-friendly Home SOC environment and understand how a security analyst monitors endpoint activity, investigates alerts, and identifies potentially suspicious authentication behavior.
 
-The goal is to understand how a SOC analyst collects logs, investigates authentication events, and interprets security alerts.
+Wazuh is deployed on an Ubuntu virtual machine, while a Kali Linux endpoint forwards security events to the Wazuh manager for analysis.
 
 ## Objectives
 
 - Deploy Wazuh using Docker Compose.
 - Connect a Linux endpoint to the Wazuh manager.
-- Collect Linux authentication and system events.
-- Detect successful and failed authentication activity.
-- Investigate alerts using rule IDs, severity levels, and MITRE ATT&CK mappings.
-- Practise basic SOC alert triage.
+- Monitor Linux authentication activity.
+- Generate controlled successful and failed authentication events.
+- Investigate Wazuh alerts, rule IDs, and severity levels.
+- Understand how authentication detections relate to MITRE ATT&CK.
+- Practice the basic SOC investigation workflow.
 
 ## Lab Environment
 
 | Component | Details |
 |---|---|
-| Host OS | Windows 11 |
+| Host operating system | Windows 11 |
 | Virtualization | VMware |
-| SIEM Platform | Wazuh 4.14.2 |
+| SIEM platform | Wazuh 4.14.2 |
 | Deployment | Docker Compose |
-| SIEM Server | Ubuntu Desktop VM |
-| Monitored Endpoint | Kali Linux VM |
-| Endpoint Agent | Wazuh Agent 4.14.2 |
+| Wazuh server | Ubuntu Desktop VM |
+| Monitored endpoint | Kali Linux VM |
+| Log sources | Linux journal, PAM authentication events |
+| Investigation interface | Wazuh Dashboard |
 
-## Architecture
+## Lab Architecture
 
-Windows 11 Host  
-└── VMware  
-&nbsp;&nbsp;&nbsp;&nbsp;├── Ubuntu Desktop — Wazuh Manager, Indexer and Dashboard  
-&nbsp;&nbsp;&nbsp;&nbsp;└── Kali Linux — Wazuh Agent  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── System and authentication logs  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓  
-Wazuh Manager → Detection Rules → Security Alerts → Dashboard
+```text
+Windows 11 Host
+       |
+     VMware
+       |
+       +----------------------------+
+       |                            |
+Ubuntu Desktop VM              Kali Linux VM
+Wazuh Server                   Wazuh Agent
+       |                            |
+       |                       Authentication
+       |                           Events
+       |                            |
+       +-------- Event Data --------+
+                    |
+              Wazuh Manager
+                    |
+             Detection Rules
+                    |
+               Security Alerts
+                    |
+              Wazuh Dashboard
+                    |
+            SOC Investigation
+```
+
+## Screenshots and Evidence
+
+### 1. Wazuh Security Overview Dashboard
+
+The dashboard provides an overview of the security events and alerts available in the lab.
+
+
+### 2. Authentication Analytics
+
+Authentication-related events from the monitored endpoint can be explored to understand login activity.
+
+![Agent Authentication Analytics](screenshots/02-agent-authentication-analytics.png)
+
+### 3. Agent Events and Rule Filtering
+
+Filtering events by rule ID helps narrow down the investigation to relevant authentication detections.
+
+![Wazuh Agent Events Rule Filter](screenshots/03-agent-events-rule-filter.png)
+
+### 4. Expanded Event Details
+
+Inspecting an individual event provides additional information for understanding why an alert was generated.
+
+![Wazuh Expanded Event Details](screenshots/04-expanded-event-details.png)
+
+### 5. Controlled Failed-Login Test
+
+A controlled authentication test was performed on the Kali Linux endpoint using the test account `soc_test_user`. An intentionally incorrect password was entered to generate a failed authentication event.
+
+![Kali Linux Failed Login Test](screenshots/05-kali-failed-login-test.png)
+
+### 6. Failed-Login Alert Investigation
+
+The corresponding Wazuh alert was investigated to verify that the authentication event was detected by the monitoring system.
+
+![Wazuh Failed Login Alert](screenshots/06-kali-lab-failed-login-alert.png)
+
+## Detection Results
+
+The following authentication-related detections were observed during lab testing.
+
+| Rule ID | Detection | Level |
+|---|---|---|
+| 5503 | PAM: User login failed | 5 |
+| 5557 | unix_chkpwd: Password check failed | 5 |
+| 5301 | User missed the password to change UID | 5 |
+
+**MITRE ATT&CK reference:** T1110.001 — Password Guessing, where applicable to the detected authentication behavior.
+
+These events were generated during controlled lab activity. They demonstrate detection and investigation capabilities, not evidence of an actual external attack.
+
+## Investigation Workflow
+
+1. Generate a controlled authentication event on the Kali Linux endpoint.
+2. Confirm that the endpoint is connected to the Wazuh manager.
+3. Open the Wazuh Dashboard and search for the related alert.
+4. Review the rule ID, description, severity, and event details.
+5. Correlate the alert with the endpoint's authentication activity.
+6. Record the findings and explain the result.
+
+## Key Learnings
+
+- Deploying a SIEM platform using Docker Compose.
+- Connecting and monitoring a Linux endpoint with a Wazuh agent.
+- Understanding Linux PAM authentication events.
+- Investigating failed authentication alerts.
+- Interpreting Wazuh rule IDs and severity levels.
+- Relating relevant detections to MITRE ATT&CK.
+- Practicing a basic SOC alert-triage workflow.
+
+## Current Project Scope
+
+The current implementation covers the Wazuh server, a connected Kali Linux agent, Linux authentication-event collection, and investigation of successful and failed authentication activity.
+
+Additional endpoint integrations, detection use cases, and incident-response exercises can be added as the lab develops.
 
 ## Tools and Technologies
 
 - Wazuh SIEM
-- Docker and Docker Compose
+- Docker Compose
 - Ubuntu Linux
 - Kali Linux
 - VMware
-- Linux journald and PAM authentication logs
+- Linux PAM and system journal
 - MITRE ATT&CK
-
-## Practical Detection Results
-
-### 1. Successful Authentication Activity
-
-Observed PAM session events generated during legitimate user activity and privilege escalation using `sudo`.
-
-### 2. Failed Login Detection
-
-Performed a controlled failed authentication attempt against a dedicated lab account named `soc_test_user`.
-
-Wazuh generated the following alerts:
-
-| Rule ID | Detection | Severity |
-|---|---|---|
-| 5503 | PAM: User login failed | Level 5 |
-| 5557 | unix_chkpwd: Password check failed | Level 5 |
-| 5301 | Failed `su` attempt | Level 5 |
-
-These alerts were associated with the MITRE ATT&CK technique **T1110.001 — Password Guessing**.
-
-This was an intentionally generated lab event, not a real-world attack.
-
-## What I Learned
-
-- Deploying a SIEM using Docker Compose.
-- Connecting and verifying a Wazuh endpoint agent.
-- Understanding Linux authentication logs and PAM events.
-- Investigating Wazuh alerts using rule IDs and severity levels.
-- Relating authentication detections to MITRE ATT&CK.
-- Following a basic SOC investigation workflow.
-
-## Current Scope
-
-The initial lab focuses on Wazuh deployment, Linux endpoint monitoring, and authentication-event detection. Additional endpoints, detection scenarios, and investigation exercises can be added as the lab develops.
 
 ## Disclaimer
 
-This project is for educational purposes and authorized lab testing only. All simulations were performed in my own virtualized lab environment.
+This project is intended for educational purposes and authorized lab testing only. Authentication tests were performed in a controlled virtual environment. The detections documented here should not be interpreted as evidence of a real-world compromise.
 
 ## Author
 
-Cybersecurity student | Interested in SOC operations, Blue Team security, SIEM, and incident investigation.
+Cybersecurity student focused on SOC operations, Blue Team security, SIEM monitoring, threat detection, and incident investigation.
