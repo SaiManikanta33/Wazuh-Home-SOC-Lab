@@ -178,7 +178,7 @@ Add Windows investigation screenshots under `Screenshots/Windows/` as they becom
 
 ### 1. Windows agent status in Wazuh
 
-![alt text](Screenshots/Windows/Windows/01-Windows-Agent-status.png)
+![alt text](Screenshots/Windows/01-Windows-Agent-status.png)
 
 
 ### 2. Event ID 4625 in Windows Event Viewer
