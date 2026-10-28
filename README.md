@@ -66,37 +66,37 @@ Wazuh Server                   Wazuh Agent
 
 The dashboard provides an overview of the security events and alerts available in the lab.
 
-![alt text](Screenshots/01-wazuh-security-overview.png)
+![alt text](Screenshots/Linux/01-wazuh-security-overview.png)
 
 ### 2. Authentication Analytics
 
 Authentication-related events from the monitored endpoint can be explored to understand login activity.
 
-![alt text](Screenshots/06-Authenticatio-Analytics.png)
+![alt text](Screenshots/Linux/06-Authenticatio-Analytics.png)
 
 ### 3. Agent Events and Rule Filtering
 
 Filtering events by rule ID helps narrow down the investigation to relevant authentication detections.
 
-![alt text](Screenshots/02-agent-events-rule-filter.png)
+![alt text](Screenshots/Linux/02-agent-events-rule-filter.png)
 
 ### 4. Expanded Event Details
 
 Inspecting an individual event provides additional information for understanding why an alert was generated.
 
-![alt text](Screenshots/03-expanded-event-details.png)
+![alt text](Screenshots/Linux/03-expanded-event-details.png)
 
 ### 5. Controlled Failed-Login Test
 
 A controlled authentication test was performed on the Kali Linux endpoint using the test account `soc_test_user`. An intentionally incorrect password was entered to generate a failed authentication event.
 
-![alt text](Screenshots/04-kali-failed-login-test.png)
+![alt text](Screenshots/Linux/04-kali-failed-login-test.png)
 
 ### 6. Failed-Login Alert Investigation
 
 The corresponding Wazuh alert was investigated to verify that the authentication event was detected by the monitoring system.
 
-![alt text](Screenshots/05-kali-lab-failed-login-alert.png)
+![alt text](Screenshots/Linux/05-kali-lab-failed-login-alert.png)
 
 ## Detection Results
 
