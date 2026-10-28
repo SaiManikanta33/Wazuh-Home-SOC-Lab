@@ -9,15 +9,17 @@ The goal of this project is to build a beginner-friendly Home SOC environment an
 
 Wazuh is deployed on an Ubuntu virtual machine, while a Kali Linux endpoint forwards security events to the Wazuh manager for analysis.
 
-## Objectives
+🎯 Project Objectives
 
-- Deploy Wazuh using Docker Compose.
-- Connect a Linux endpoint to the Wazuh manager.
-- Monitor Linux authentication activity.
-- Generate controlled successful and failed authentication events.
-- Investigate Wazuh alerts, rule IDs, and severity levels.
-- Understand how authentication detections relate to MITRE ATT&CK.
-- Practice the basic SOC investigation workflow.
+Deploy Wazuh SIEM in a virtualized lab environment.
+
+Connect endpoints and monitor their security events.
+
+Investigate authentication failures and suspicious activity.
+
+Understand Windows Security Event Logs and Linux authentication logs.
+
+Practice alert analysis, event correlation, and basic SOC investigation workflows.
 
 ## Lab Environment
 
