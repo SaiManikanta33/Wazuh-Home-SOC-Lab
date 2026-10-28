@@ -177,7 +177,7 @@ A single failed logon does not establish malicious activity. The event fields, s
 Add Windows investigation screenshots under `Screenshots/Windows/` as they become available.
 
 ### 1. Windows agent status in Wazuh
-![alt text](Wazuh-Home-SOC-Lab\Screenshots\Windows\01-Windows-Agent-status.png)
+![alt text](Screenshots\Windows\01-Windows-Agent-status.png)
 
 
 ### 2. Event ID 4625 in Windows Event Viewer
