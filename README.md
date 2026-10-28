@@ -9,17 +9,15 @@ The goal of this project is to build a beginner-friendly Home SOC environment an
 
 Wazuh is deployed on an Ubuntu virtual machine, while a Kali Linux endpoint forwards security events to the Wazuh manager for analysis.
 
-🎯 Project Objectives
+## Objectives
 
-Deploy Wazuh SIEM in a virtualized lab environment.
-
-Connect endpoints and monitor their security events.
-
-Investigate authentication failures and suspicious activity.
-
-Understand Windows Security Event Logs and Linux authentication logs.
-
-Practice alert analysis, event correlation, and basic SOC investigation workflows.
+- Deploy Wazuh using Docker Compose.
+- Connect a Linux endpoint to the Wazuh manager.
+- Monitor Linux authentication activity.
+- Generate controlled successful and failed authentication events.
+- Investigate Wazuh alerts, rule IDs, and severity levels.
+- Understand how authentication detections relate to MITRE ATT&CK.
+- Practice the basic SOC investigation workflow.
 
 ## Lab Environment
 
@@ -33,6 +31,8 @@ Practice alert analysis, event correlation, and basic SOC investigation workflow
 | Monitored endpoint | Kali Linux VM |
 | Log sources | Linux journal, PAM authentication events |
 | Investigation interface | Wazuh Dashboard |
+| Additional monitored endpoint | Windows 11 endpoint |
+| Windows log source | Windows Security Event Log |
 
 ## Lab Architecture
 
@@ -41,25 +41,32 @@ Windows 11 Host
        |
      VMware
        |
-       +----------------------------+
-       |                            |
+       +-----------------------------+
+       |                             |
 Ubuntu Desktop VM              Kali Linux VM
 Wazuh Server                   Wazuh Agent
-       |                            |
-       |                       Authentication
-       |                           Events
-       |                            |
-       +-------- Event Data --------+
-                    |
-              Wazuh Manager
-                    |
-             Detection Rules
-                    |
-               Security Alerts
-                    |
-              Wazuh Dashboard
-                    |
-            SOC Investigation
+       |                             |
+       |                       Linux Authentication
+       |                             Events
+       |
+       +-----------------------------+
+       |
+Windows 11 Endpoint
+Wazuh Agent
+       |
+Windows Security Events
+       |
+       +---------- Event Data --------+
+                     |
+               Wazuh Manager
+                     |
+               Detection Rules
+                     |
+                Security Alerts
+                     |
+               Wazuh Dashboard
+                     |
+               SOC Investigation
 ```
 
 ## Screenshots and Evidence
@@ -123,6 +130,74 @@ These events were generated during controlled lab activity. They demonstrate det
 5. Correlate the alert with the endpoint's authentication activity.
 6. Record the findings and explain the result.
 
+## Windows Endpoint Monitoring and Investigation
+
+In addition to Linux authentication monitoring, a Windows endpoint was connected to the Wazuh server to collect and investigate Windows Security events.
+
+### Windows Lab Details
+
+- Endpoint: Windows 11 host
+- SIEM: Wazuh 4.14.2
+- Log source: Windows Security Event Log
+- Investigation interface: Wazuh Dashboard — Threat Hunting
+
+### Windows Failed-Logon Investigation — Event ID 4625
+
+A controlled failed-login test was performed on the Windows endpoint to verify that Windows Security events were collected and searchable in Wazuh.
+
+**Event details:**
+
+| Field | Observed value |
+|---|---|
+| Event ID | `4625` |
+| Event description | An account failed to log on |
+| Severity value | `AUDIT_FAILURE` |
+| Logon type | `2` — Interactive |
+| Wazuh rule description | `Logon Failure - Unknown user or bad password` |
+| Status | `0xC000006D` |
+| Substatus | `0xC0000380` |
+
+### Investigation Steps
+
+1. Verified that the Windows endpoint was active in Wazuh.
+2. Checked the Windows logon auditing configuration.
+3. Generated a controlled failed-login event.
+4. Confirmed Event ID 4625 in Windows Event Viewer.
+5. Located the corresponding event in Wazuh Threat Hunting.
+6. Reviewed the event fields and associated detection rule.
+
+### Result and SOC Assessment
+
+The controlled test confirmed that the Windows Security event reached Wazuh and could be investigated through the dashboard.
+
+A single failed logon does not establish malicious activity. The event fields, surrounding activity, and account context must be reviewed before deciding whether escalation is necessary. The substatus and MITRE ATT&CK mapping should also be validated before assigning a precise cause or attack classification.
+
+### Windows Evidence
+
+Add Windows investigation screenshots under `Screenshots/Windows/` as they become available.
+
+### 1. Windows agent status in Wazuh
+       Wazuh-Home-SOC-Lab\Screenshots\Windows\01-Windows-Agent-status.png
+
+### 2. Event ID 4625 in Windows Event Viewer
+       Wazuh-Home-SOC-Lab\Screenshots\Windows\02-Windows-4625-event-Viewer.png
+
+### 3. Expanded event details(1)
+       Wazuh-Home-SOC-Lab\Screenshots\Windows\03-Event-Details.png
+
+### 4. Expanded event details(2)
+       Wazuh-Home-SOC-Lab\Screenshots\Windows\04-Event-Details.png
+
+### 5. Expanded event details(3)
+       Wazuh-Home-SOC-Lab\Screenshots\Windows\05-Event-Details.png
+
+Suggested evidence:
+- Windows agent status in Wazuh
+- Event ID 4625 in Windows Event Viewer
+- Matching event in Wazuh Threat Hunting
+- Expanded event details
+
+
 ## Key Learnings
 
 - Deploying a SIEM platform using Docker Compose.
@@ -135,9 +210,7 @@ These events were generated during controlled lab activity. They demonstrate det
 
 ## Current Project Scope
 
-The current implementation covers the Wazuh server, a connected Kali Linux agent, Linux authentication-event collection, and investigation of successful and failed authentication activity.
-
-Additional endpoint integrations, detection use cases, and incident-response exercises can be added as the lab develops.
+The current implementation covers the Wazuh server, Linux authentication-event monitoring through the Kali Linux agent, and Windows Security Event collection and failed-logon investigation. Additional detection use cases and incident-response exercises can be added as the lab develops.
 
 ## Tools and Technologies
 
@@ -148,6 +221,8 @@ Additional endpoint integrations, detection use cases, and incident-response exe
 - VMware
 - Linux PAM and system journal
 - MITRE ATT&CK
+- Windows 11
+- Windows Security Event Logs
 
 ## Disclaimer
 
