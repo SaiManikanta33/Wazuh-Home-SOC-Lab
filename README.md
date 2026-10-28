@@ -182,23 +182,20 @@ Add Windows investigation screenshots under `Screenshots/Windows/` as they becom
 
 
 ### 2. Event ID 4625 in Windows Event Viewer
-       Wazuh-Home-SOC-Lab\Screenshots\Windows\02-Windows-4625-event-Viewer.png
+
+![alt text](Screenshots/Windows/02-Windows-4625-event-Viewer.png)
 
 ### 3. Expanded event details(1)
-       Wazuh-Home-SOC-Lab\Screenshots\Windows\03-Event-Details.png
+
+![alt text](Screenshots/Windows/03-Event-Details.png)
 
 ### 4. Expanded event details(2)
-       Wazuh-Home-SOC-Lab\Screenshots\Windows\04-Event-Details.png
+
+![alt text](Screenshots/Windows/04-Event-Details.png)
 
 ### 5. Expanded event details(3)
-       Wazuh-Home-SOC-Lab\Screenshots\Windows\05-Event-Details.png
 
-Suggested evidence:
-- Windows agent status in Wazuh
-- Event ID 4625 in Windows Event Viewer
-- Matching event in Wazuh Threat Hunting
-- Expanded event details
-
+![alt text](Screenshots/Windows/05-Event-Details.png)
 
 ## Key Learnings
 
